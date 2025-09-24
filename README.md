@@ -54,35 +54,39 @@ Socket programming finds applications in various domains, including web developm
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 ## Program:
 
-## Client:
-
-```
-import socket
-s=socket.socket()
-s.connect(('localhost', 8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
-```
 ## Server:
 ```
 import socket
-from datetime import datetime
-s=socket.socket()
-s.bind(('localhost',8000))
-s.listen(5)
-c,addr=s.accept()
-print("Client Address: ",addr)
-now = datetime.now()
-c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
-ack=c.recv(1024).decode()
-if ack:
-    print(ack)
-c.close()
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = '127.0.0.1'   
+port = 12345
+server_socket.bind((host, port))
+server_socket.listen(1)
+print(f"Server listening on {host}:{port}")
+conn, addr = server_socket.accept()
+print(f"Connected by {addr}")
+data = conn.recv(1024).decode()
+print(f"Client says: {data}")
+conn.send("Hello from Server!".encode())
+conn.close()
+server_socket.close()
+```
+
+## Client:
+```
+import socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = '127.0.0.1'
+port = 12345
+client_socket.connect((host, port))
+client_socket.send("Hello from Client!".encode())
+data = client_socket.recv(1024).decode()
+print(f"Server says: {data}")
+client_socket.close()
 ```
 ## Output:
 
-<img width="1919" height="990" alt="Screenshot 2025-09-11 114714" src="https://github.com/user-attachments/assets/8ba0ef9b-ffa6-4401-8b68-0588d5b66677" />
+<img width="1920" height="1007" alt="Screenshot (33)" src="https://github.com/user-attachments/assets/65106e7d-ae84-45e1-8233-a5feafdb285f" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
