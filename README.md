@@ -80,6 +80,9 @@ if ack:
     print(ack)
 c.close()
 ```
+## Output:
+
+<img width="1919" height="990" alt="Screenshot 2025-09-11 114714" src="https://github.com/user-attachments/assets/8ba0ef9b-ffa6-4401-8b68-0588d5b66677" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
