@@ -57,36 +57,33 @@ Socket programming finds applications in various domains, including web developm
 ## Server:
 ```
 import socket
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '127.0.0.1'   
-port = 12345
-server_socket.bind((host, port))
-server_socket.listen(1)
-print(f"Server listening on {host}:{port}")
-conn, addr = server_socket.accept()
-print(f"Connected by {addr}")
-data = conn.recv(1024).decode()
-print(f"Client says: {data}")
-conn.send("Hello from Server!".encode())
-conn.close()
-server_socket.close()
+from datetime import datetime
+s=socket.socket()
+s.bind(('localhost',7000))
+s.listen(5)
+c,addr=s.accept()
+print("Client Address : ",addr)
+now = datetime.now()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
+ack=c.recv(1024).decode()
+if ack:
+    print(ack)
+c.close()
 ```
 
 ## Client:
 ```
 import socket
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '127.0.0.1'
-port = 12345
-client_socket.connect((host, port))
-client_socket.send("Hello from Client!".encode())
-data = client_socket.recv(1024).decode()
-print(f"Server says: {data}")
-client_socket.close()
+s=socket.socket()
+s.connect(('localhost',7000))
+print(s.getsockname())
+print(s.recv(1024).decode())
+s.send("acknowledgement recived from the server".encode())
 ```
 ## Output:
 
-<img width="1920" height="1007" alt="Screenshot (33)" src="https://github.com/user-attachments/assets/65106e7d-ae84-45e1-8233-a5feafdb285f" />
+<img width="1919" height="1017" alt="image" src="https://github.com/user-attachments/assets/4bc9fd71-a22d-44cc-b68f-ce37e94e934c" />
+
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
